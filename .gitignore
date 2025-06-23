@@ -12,7 +12,7 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
-/git_ignore
+/node_modules
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

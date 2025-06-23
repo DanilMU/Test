@@ -1,7 +1,8 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { usePhotoStore } from './stores/photoStore'
 import PhotoTable from './components/PhotoTable.vue'
+import { debounce } from 'lodash-es'
 
 const store = usePhotoStore()
 const albumIdsInput = ref('')
@@ -13,24 +14,20 @@ const totalPhotos = computed(() => store.photos.length)
 const displayedPhotosCount = computed(() => store.displayedPhotos.length)
 const filteredPhotosCount = computed(() => store.filteredPhotos.length)
 
+// Инициализация приложения
 onMounted(() => {
-  // Загружаем состояние из localStorage
   store.loadStateFromLocalStorage()
   
-  // Применяем сохраненные albumIds
   if (store.albumIds.length > 0) {
     albumIdsInput.value = store.albumIds.join(' ')
   }
   
-  // Проверяем текущую тему
   isDark.value = document.documentElement.classList.contains('dark')
-  
-  // Загружаем фотографии
   store.fetchPhotos()
 })
 
-const applyFilter = () => {
-  // Преобразуем введенные значения в массив чисел
+// Дебаунс для фильтрации
+const applyFilter = debounce(() => {
   const ids = albumIdsInput.value
     .split(' ')
     .map(id => id.trim())
@@ -38,10 +35,14 @@ const applyFilter = () => {
     .map(id => parseInt(id))
     .filter(id => !isNaN(id))
   
-  // Сохраняем в хранилище и localStorage
   store.setAlbumIds(ids)
   store.saveAlbumIdsToLocalStorage()
-}
+}, 300)
+
+// Автоматическое применение фильтра при изменении
+watch(albumIdsInput, () => {
+  applyFilter()
+})
 
 const toggleTheme = () => {
   isDark.value = !isDark.value
@@ -64,17 +65,18 @@ const toggleTheme = () => {
             <div class="flex flex-col md:flex-row gap-3">
               <input
                 id="albumIds"
-                v-model="albumIdsInput"
+                v-model.trim="albumIdsInput"
                 type="text"
                 placeholder="Введите ID альбомов через пробел (например: 1 2 3)"
                 class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
                 :disabled="isLoading"
+                @keyup.enter="applyFilter"
               >
               
               <div class="flex gap-3">
                 <button
                   @click="applyFilter"
-                  class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center whitespace-nowrap"
+                  class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center whitespace-nowrap transition-colors"
                   :disabled="isLoading"
                 >
                   <span v-if="isLoading" class="flex items-center">
@@ -89,7 +91,7 @@ const toggleTheme = () => {
                 
                 <button
                   @click="toggleTheme"
-                  class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 self-center"
+                  class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 self-center transition-colors"
                   :title="isDark ? 'Переключить на светлую тему' : 'Переключить на темную тему'"
                 >
                   <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -109,7 +111,7 @@ const toggleTheme = () => {
       </header>
 
       <div class="mb-8">
-        <div v-if="error" class="p-4 mb-4 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-md">
+        <div v-if="error" class="p-4 mb-4 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-md transition-all">
           {{ error }}
         </div>
         
@@ -127,39 +129,32 @@ const toggleTheme = () => {
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  transition: background-color 0.2s;
-}
-
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 /* Адаптивные стили для мобильных устройств */
 @media (max-width: 640px) {
-  .flex-col.md\:flex-row {
+  .filter-section .md\:flex-row {
     flex-direction: column;
   }
   
-  .flex-col.md\:flex-row > input {
-    margin-bottom: 12px;
+  .filter-section .md\:flex-row > input {
+    margin-bottom: 0.75rem;
   }
   
-  .flex-col.md\:flex-row > .flex {
+  .filter-section .md\:flex-row > .flex {
     width: 100%;
     justify-content: space-between;
   }
   
-  .flex-col.md\:flex-row > .flex > button {
+  .filter-section .md\:flex-row > .flex > button {
     width: 48%;
   }
   
-  .flex-col.md\:flex-row > .flex > button:first-child {
+  .filter-section .md\:flex-row > .flex > button:first-child {
     margin-right: 4%;
+  }
+  
+  /* Адаптация таблицы на мобильных */
+  .table-container {
+    width: 100% !important;
   }
 }
 </style>

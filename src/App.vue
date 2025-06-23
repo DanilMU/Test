@@ -128,33 +128,3 @@ const toggleTheme = () => {
   </div>
 </template>
 
-<style>
-/* Адаптивные стили для мобильных устройств */
-@media (max-width: 640px) {
-  .filter-section .md\:flex-row {
-    flex-direction: column;
-  }
-  
-  .filter-section .md\:flex-row > input {
-    margin-bottom: 0.75rem;
-  }
-  
-  .filter-section .md\:flex-row > .flex {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .filter-section .md\:flex-row > .flex > button {
-    width: 48%;
-  }
-  
-  .filter-section .md\:flex-row > .flex > button:first-child {
-    margin-right: 4%;
-  }
-  
-  /* Адаптация таблицы на мобильных */
-  .table-container {
-    width: 100% !important;
-  }
-}
-</style>

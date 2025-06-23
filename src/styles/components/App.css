@@ -1,0 +1,26 @@
+@media (max-width: 640px) {
+  .filter-section .md\:flex-row {
+    flex-direction: column;
+  }
+  
+  .filter-section .md\:flex-row > input {
+    margin-bottom: 0.75rem;
+  }
+  
+  .filter-section .md\:flex-row > .flex {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .filter-section .md\:flex-row > .flex > button {
+    width: 48%;
+  }
+  
+  .filter-section .md\:flex-row > .flex > button:first-child {
+    margin-right: 4%;
+  }
+  
+  .table-container {
+    width: 100% !important;
+  }
+}

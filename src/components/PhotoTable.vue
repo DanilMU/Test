@@ -42,7 +42,6 @@ const setupInfiniteScroll = () => {
 const loadMorePhotos = () => {
   isLoadingMore.value = true
   store.loadMore()
-  // Убираем setTimeout для более плавной загрузки
   isLoadingMore.value = false
 }
 
@@ -81,7 +80,7 @@ onUnmounted(() => {
             </th>
             <th 
               scope="col" 
-              class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[10%]"
+              class="px-1 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[10%]"
               @click="setSort('albumId')"
             >
               <div class="flex items-center">
@@ -91,7 +90,7 @@ onUnmounted(() => {
             </th>
             <th 
               scope="col" 
-              class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[25%]"
+              class="px-5 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[25%]"
               @click="setSort('title')"
             >
               <div class="flex items-center">
@@ -198,35 +197,3 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style scoped>
-table {
-  width: 100%;
-  table-layout: fixed;
-}
-
-th, td {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Улучшенный стиль для заголовков */
-th {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: inherit;
-}
-
-/* Оптимизация для мобильных устройств */
-@media (max-width: 640px) {
-  .table-container {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  th, td {
-    padding: 0.5rem;
-    font-size: 0.875rem;
-  }
-}
-</style>

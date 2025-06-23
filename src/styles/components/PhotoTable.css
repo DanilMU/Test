@@ -1,0 +1,30 @@
+.photo-table-container {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.photo-table-container th, 
+.photo-table-container td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.photo-table-container th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: inherit;
+}
+
+@media (max-width: 640px) {
+  .photo-table-container {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .photo-table-container th, 
+  .photo-table-container td {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+}

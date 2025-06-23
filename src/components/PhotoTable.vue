@@ -59,18 +59,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 shadow">
+  <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 shadow w-full">
     <div 
       ref="tableContainer"
-      class="overflow-auto bg-white dark:bg-gray-800"
-      :style="{ height: '600px', width: '600px', maxWidth: '100%' }"
+      class="overflow-auto bg-white dark:bg-gray-800 w-full"
+      :style="{ height: '600px' }"
     >
       <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead class="bg-gray-50 dark:bg-gray-700 sticky top-0 z-10">
           <tr>
             <th 
               scope="col" 
-              class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[10%]"
+              class="px-2 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 min-w-[50px]"
               @click="setSort('id')"
             >
               <div class="flex items-center">
@@ -80,7 +80,7 @@ onUnmounted(() => {
             </th>
             <th 
               scope="col" 
-              class="px-1 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[10%]"
+              class="px-1 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 min-w-[70px]"
               @click="setSort('albumId')"
             >
               <div class="flex items-center">
@@ -90,7 +90,7 @@ onUnmounted(() => {
             </th>
             <th 
               scope="col" 
-              class="px-5 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[25%]"
+              class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 min-w-[200px]"
               @click="setSort('title')"
             >
               <div class="flex items-center">
@@ -100,7 +100,7 @@ onUnmounted(() => {
             </th>
             <th 
               scope="col" 
-              class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[25%]"
+              class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 min-w-[200px]"
               @click="setSort('url')"
             >
               <div class="flex items-center">
@@ -110,7 +110,7 @@ onUnmounted(() => {
             </th>
             <th 
               scope="col" 
-              class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 w-[30%]"
+              class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 min-w-[200px]"
               @click="setSort('thumbnailUrl')"
             >
               <div class="flex items-center">
